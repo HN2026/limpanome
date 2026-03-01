@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: limpanome
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    plan: free
+    region: oregon
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+
+  - type: pserv
+    name: limpanome-db
+    plan: free
+    region: oregon
+    ipAllowList: []
+    databases:
+      - name: limpanome
+        user: limpanome_user
+        version: "15"
